@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Chúc mừng 8/3 ❤️</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:black;
+overflow:hidden;
+color:white;
+text-align:center;
+}
+
+/* STAR BACKGROUND */
+
+.star{
+position:absolute;
+background:white;
+border-radius:50%;
+animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+from{opacity:0.2}
+to{opacity:1}
+}
+
+/* CONTAINER */
+
+.container{
+position:relative;
+z-index:10;
+margin-top:40px;
+}
+
+h1{
+font-size:45px;
+}
+
+/* HEART 3D */
+
+.heart3d{
+width:450px;
+height:450px;
+margin:120px auto;
+position:relative;
+transform-style:preserve-3d;
+animation:rotateHeart 20s linear infinite;
+}
+
+.heart3d img{
+position:absolute;
+width:120px;
+height:150px;
+object-fit:cover;
+border-radius:15px;
+box-shadow:0 0 25px rgba(255,100,150,0.8);
+opacity:0;
+transform:scale(0);
+transition:1.5s;
+}
+
+.heart3d img.show{
+opacity:1;
+transform:scale(1);
+}
+
+/* HEART ROTATION */
+
+@keyframes rotateHeart{
+
+0%{
+transform:rotateY(0deg) rotateX(10deg);
+}
+
+100%{
+transform:rotateY(360deg) rotateX(10deg);
+}
+
+}
+
+/* MESSAGE */
+
+#message{
+font-size:22px;
+width:70%;
+margin:20px auto;
+min-height:80px;
+}
+
+/* LOVE BUTTON */
+
+button{
+padding:15px 35px;
+font-size:20px;
+border:none;
+border-radius:30px;
+background:#ff4d6d;
+color:white;
+cursor:pointer;
+box-shadow:0 0 20px rgba(255,100,150,0.8);
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.1);
+}
+
+/* FALLING OBJECTS */
+
+.heart,.flower{
+position:absolute;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+
+0%{
+transform:translateY(-100px);
+opacity:1;
+}
+
+100%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chúc mừng 8/3 ❤️</h1>
+
+<div class="heart3d">
+
+<img src="1.jpg">
+<img src="2.jpg">
+<img src="3.jpg">
+<img src="4.jpg">
+<img src="5.jpg">
+<img src="6.jpg">
+<img src="7.jpg">
+<img src="4.jpg">
+
+</div>
+
+<p id="message"></p>
+
+<button onclick="loveExplosion()">Anh yêu em ❤️</button>
+
+</div>
+
+<audio id="music" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* STAR BACKGROUND */
+
+for(let i=0;i<120;i++){
+
+let star=document.createElement("div")
+star.className="star"
+
+let size=Math.random()*3
+
+star.style.width=size+"px"
+star.style.height=size+"px"
+
+star.style.left=Math.random()*100+"vw"
+star.style.top=Math.random()*100+"vh"
+
+document.body.appendChild(star)
+
+}
+
+
+
+/* HEART IMAGE POSITION */
+
+const imgs=document.querySelectorAll(".heart3d img")
+
+imgs.forEach((img,i)=>{
+
+let angle=(i/imgs.length)*Math.PI*2
+
+let x=160*Math.pow(Math.sin(angle),3)
+
+let y=-(130*Math.cos(angle)-50*Math.cos(2*angle)-20*Math.cos(3*angle)-10*Math.cos(4*angle))
+
+img.style.transform=`translate3d(${x}px,${y}px,${Math.sin(angle)*120}px)`
+
+setTimeout(()=>{
+
+img.classList.add("show")
+
+},i*300)
+
+})
+
+
+
+/* TYPING TEXT */
+
+const text=`Chúc em một ngày 8/3 thật nhiều niềm vui 🌸
+Luôn xinh đẹp, hạnh phúc và luôn mỉm cười.
+
+Cảm ơn em vì đã xuất hiện trong cuộc đời anh.
+Anh yêu em rất nhiều ❤️`
+
+let i=0
+
+function typeText(){
+
+if(i<text.length){
+
+document.getElementById("message").innerHTML+=text.charAt(i)
+
+i++
+
+setTimeout(typeText,50)
+
+}
+
+}
+
+typeText()
+
+
+
+/* FALLING HEART */
+
+function createHeart(){
+
+const heart=document.createElement("div")
+
+heart.className="heart"
+
+heart.innerHTML="💗"
+
+heart.style.left=Math.random()*100+"vw"
+
+heart.style.fontSize=Math.random()*20+10+"px"
+
+heart.style.animationDuration=Math.random()*3+4+"s"
+
+document.body.appendChild(heart)
+
+setTimeout(()=>heart.remove(),7000)
+
+}
+
+
+
+/* FALLING FLOWER */
+
+function createFlower(){
+
+const flower=document.createElement("div")
+
+flower.className="flower"
+
+flower.innerHTML="🌸"
+
+flower.style.left=Math.random()*100+"vw"
+
+flower.style.fontSize=Math.random()*20+10+"px"
+
+flower.style.animationDuration=Math.random()*4+4+"s"
+
+document.body.appendChild(flower)
+
+setTimeout(()=>flower.remove(),8000)
+
+}
+
+setInterval(createHeart,400)
+setInterval(createFlower,700)
+
+
+
+/* LOVE EXPLOSION */
+
+function loveExplosion(){
+
+for(let i=0;i<80;i++){
+
+let heart=document.createElement("div")
+
+heart.innerHTML="❤️"
+heart.style.position="absolute"
+heart.style.left="50%"
+heart.style.top="50%"
+heart.style.fontSize=Math.random()*30+20+"px"
+
+let x=(Math.random()-0.5)*800
+let y=(Math.random()-0.5)*800
+
+heart.style.transition="1.5s"
+
+document.body.appendChild(heart)
+
+setTimeout(()=>{
+
+heart.style.transform=`translate(${x}px,${y}px)`
+heart.style.opacity=0
+
+},10)
+
+setTimeout(()=>heart.remove(),1600)
+
+}
+
+}
+
+
+
+/* MUSIC */
+
+window.addEventListener("click",()=>{
+
+document.getElementById("music").play()
+
+})
+
+</script>
+
+</body>
+</html>
